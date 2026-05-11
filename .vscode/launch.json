@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch AutoServiceManager Desktop",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-desktop",
+      "program": "${workspaceFolder}/AutoServiceManager.Desktop/bin/Debug/net10.0/AutoServiceManager.Desktop.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/AutoServiceManager.Desktop",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Launch AutoServiceManager Web",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-web",
+      "program": "${workspaceFolder}/bin/Debug/net10.0/AutoServiceManager.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5257"
+      }
+    }
+  ]
+}

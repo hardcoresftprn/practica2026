@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var userName = Context.Session.GetString("UserName") ?? "Utilizator";
+    var userInitials = Context.Session.GetString("UserInitials") ?? "US";
+    var userRole = Context.Session.GetString("UserRole") ?? "USER";
+    var userRoleLabel = userRole == "ADMINISTRATOR" ? "Administrator" : "Vizualizare";
+}
+<html lang="ro">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AutoService Manager</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="brand">
+            <i data-lucide="wrench"></i>
+            <span>AutoService</span>
+        </div>
+        <nav>
+            <a href="/" class="nav-item @(currentController == "Home" ? "active" : "")">
+                <i data-lucide="layout-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="/Clients" class="nav-item @(currentController == "Clients" ? "active" : "")">
+                <i data-lucide="users"></i>
+                <span>Clienți</span>
+            </a>
+            <a href="/Vehicles" class="nav-item @(ViewData["Feature"]?.ToString() == "Vehicles" ? "active" : "")">
+                <i data-lucide="car"></i>
+                <span>Autovehicule</span>
+            </a>
+            <a href="/Orders" class="nav-item @(ViewData["Feature"]?.ToString() == "Orders" ? "active" : "")">
+                <i data-lucide="calendar"></i>
+                <span>Programări</span>
+            </a>
+            <a href="/Parts" class="nav-item @(ViewData["Feature"]?.ToString() == "Parts" ? "active" : "")">
+                <i data-lucide="package"></i>
+                <span>Piese</span>
+            </a>
+            <a href="/Invoices" class="nav-item @(ViewData["Feature"]?.ToString() == "Invoices" ? "active" : "")">
+                <i data-lucide="file-text"></i>
+                <span>Facturi</span>
+            </a>
+            <a href="/Reports" class="nav-item @(ViewData["Feature"]?.ToString() == "Reports" ? "active" : "")">
+                <i data-lucide="bar-chart-2"></i>
+                <span>Rapoarte</span>
+            </a>
+            <div style="margin-top: auto; padding-top: 2rem;">
+                <a href="/Settings" class="nav-item @(ViewData["Feature"]?.ToString() == "Settings" ? "active" : "")">
+                    <i data-lucide="settings"></i>
+                    <span>Setări</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="layout-wrapper">
+        <div class="topbar">
+            <div class="search-box">
+                <i data-lucide="search" style="width:18px; color:var(--text-muted)"></i>
+                <input type="text" placeholder="Caută comenzi, clienți, vehicule...">
+            </div>
+            <div class="topbar-actions">
+                <div class="notification-bell">
+                    <i data-lucide="bell"></i>
+                    <span class="notification-badge">4</span>
+                </div>
+                <div class="user-profile">
+                    <div class="user-info">
+                        <span class="user-name">@userName</span>
+                        <span class="user-role">@userRoleLabel</span>
+                    </div>
+                    <div class="user-avatar" aria-label="@userName">@userInitials</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            @RenderBody()
+        </div>
+    </div>
+
+
+    <script>
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,79 @@
+@startuml
+title Diagrama Use Case - sdsAUTO
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam usecase {
+    BackgroundColor White
+    BorderColor Black
+}
+skinparam actor {
+    BackgroundColor White
+    BorderColor Black
+}
+
+actor "User" as BaseUser
+actor "Utilizator\n(Read-Only)" as User
+actor "Administrator\n(Full Access)" as Admin
+
+BaseUser --> User
+BaseUser --> Admin
+
+rectangle "Sistem Management Service Auto - sdsAUTO" {
+    usecase "Autentificare" as UC_Login
+    usecase "Vizualizare Dashboard" as UC_Dashboard
+    usecase "Vizualizare Clienți" as UC_ViewClients
+    usecase "Vizualizare Autovehicule" as UC_ViewVehicles
+    usecase "Vizualizare Programări" as UC_ViewOrders
+    usecase "Vizualizare Piese" as UC_ViewParts
+    usecase "Vizualizare Facturi" as UC_ViewInvoices
+    usecase "Vizualizare Rapoarte" as UC_ViewReports
+
+    usecase "Adăugare Client" as UC_AddClient
+    usecase "Editare Client" as UC_EditClient
+    usecase "Ștergere Client" as UC_DeleteClient
+    usecase "Gestionare Autovehicule" as UC_ManageVehicles
+    usecase "Gestionare Programări" as UC_ManageOrders
+    usecase "Gestionare Piese" as UC_ManageParts
+    usecase "Generare / Gestionare Facturi" as UC_ManageInvoices
+    usecase "Configurare Setări" as UC_Settings
+}
+
+User --> UC_Login
+User --> UC_Dashboard
+User --> UC_ViewClients
+User --> UC_ViewVehicles
+User --> UC_ViewOrders
+User --> UC_ViewParts
+User --> UC_ViewInvoices
+User --> UC_ViewReports
+
+Admin --> UC_AddClient
+Admin --> UC_EditClient
+Admin --> UC_DeleteClient
+Admin --> UC_ManageVehicles
+Admin --> UC_ManageOrders
+Admin --> UC_ManageParts
+Admin --> UC_ManageInvoices
+Admin --> UC_Settings
+
+UC_AddClient ..> UC_ViewClients : <<include>>
+UC_EditClient ..> UC_ViewClients : <<include>>
+UC_DeleteClient ..> UC_ViewClients : <<include>>
+UC_ManageVehicles ..> UC_ViewVehicles : <<include>>
+UC_ManageOrders ..> UC_ViewOrders : <<include>>
+UC_ManageParts ..> UC_ViewParts : <<include>>
+UC_ManageInvoices ..> UC_ViewInvoices : <<include>>
+
+note right of User
+  Utilizatorul simplu poate doar
+  să vizualizeze informațiile.
+end note
+
+note right of Admin
+  Administratorul are toate drepturile:
+  creare, editare, ștergere și configurare.
+end note
+
+@enduml
